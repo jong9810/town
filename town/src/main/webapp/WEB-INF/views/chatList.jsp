@@ -108,6 +108,57 @@
   		align-items : center;
 		margin-right : 10px;
     }
+
+    /* 채팅방 아이템 스타일 */
+    .chat-item2 {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #dcd9d8;
+      cursor: pointer;
+    }
+    
+    /* 채팅방 아이템 썸네일 이미지 스타일 */
+    .chat-item2 .thumbnail {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 10px;
+    }
+    
+    /* 채팅방 아이템 정보 스타일 */
+    .chat-item2 .info {
+      flex: 1;
+    }
+    
+    /* 채팅방 아이템 정보 제목 스타일 */
+    .chat-item2 .info .title {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    
+    /* 채팅방 아이템 정보 메시지 스타일 */
+    .chat-item2 .info .message {
+      font-size: 14px;
+      line-height: 1.4;
+      color: #666;
+    }
+    
+    .chat-item2 .totalisread {
+		display : flex;
+		width: 25px;
+		height: 25px;
+		border-radius: 50%;
+		background-color : red;
+		color : white;
+		justify-content : center;
+  		align-items : center;
+		margin-right : 10px;
+    }
   </style>
 <script>
   $(document).ready(function() {
@@ -131,6 +182,11 @@
     	else {
         	window.location.href = '/chatstart?touser_id=' + encodeURIComponent(toId);
     	}
+    });
+    
+    $(".chat-item2").on("click", function() {
+    	var boardId = $(this).data("board-id");
+		window.location.href = '/entergchat?board_id=' + encodeURIComponent(boardId);		    	
     });
   });
 </script>
@@ -156,7 +212,17 @@
 	  </c:forEach>
     </div>
     <div class="header">그룹 채팅</div>
-    <div class="chat-list"></div>
+    <div class="chat-list">
+ 	  <c:forEach items="${list2}" var="list2">
+	  	<div class="chat-item2" data-board-id="${list2.board_id}">
+	  		<img class="thumbnail" src="img/기본프로필사진.png">
+	  		<div class="info">
+	  			<div class="title">${list2.chatroom_name}</div>
+	  			<div class="message">${list2.board_id}</div>
+	  		</div>
+	  	</div>
+	  </c:forEach>   
+    </div>
   </div>
 </body>
 </html>

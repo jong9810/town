@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import Dto.ChatlistDTO;
 import Dto.ChatroomDTO;
+import Dto.GChatlistDTO;
 import Dto.MessageDTO;
 import Service.ChatService;
+import Service.GChatService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -25,6 +27,10 @@ public class ChatController {
 	@Autowired
 	@Qualifier("ChatService")
 	ChatService service;
+	
+	@Autowired
+	@Qualifier("GChatService")
+	GChatService service2;
 	
 	@RequestMapping("/testchat")
 	public String testchat() {
@@ -100,10 +106,12 @@ public class ChatController {
 	@RequestMapping("/chatlist")
 	public ModelAndView chatlist(HttpSession session) {
 		ChatlistDTO dto6 = new ChatlistDTO();
+		GChatlistDTO dto888 = new GChatlistDTO();
 		ModelAndView mv = new ModelAndView();
 		String member_id = String.valueOf(session.getAttribute("member_id"));
 		dto6.setMember_id(member_id);
 		ArrayList<ChatlistDTO> list = service.selectChatlist(dto6);
+		
 
 		for(ChatlistDTO data : list) {
 			String touser_id = data.getTo_id();
@@ -118,6 +126,7 @@ public class ChatController {
 				String latest_content = service.latestContent(dto77);
 				data.setLatest_content(latest_content);
 				
+				dto77.setMember_id(member_id);
 				dto77.setTouser_id(member_id2);
 				int totalisread = service.countIsread(dto77);
 				
@@ -132,6 +141,7 @@ public class ChatController {
 				String latest_content = service.latestContent(dto77);
 				data.setLatest_content(latest_content);
 				
+				dto77.setMember_id(member_id);
 				dto77.setTouser_id(touser_id);
 				int totalisread = service.countIsread(dto77);
 				
@@ -140,7 +150,13 @@ public class ChatController {
 			}
 		}
 		
+		dto888.setMember_id(member_id);
+		ArrayList<GChatlistDTO> list2 = service2.selectGchatlist(dto888);
+		
+		System.out.println(list2.size());
+		
 		mv.addObject("list",list);
+		mv.addObject("list2",list2);
 		mv.setViewName("chatList");
 		return mv;
 	}

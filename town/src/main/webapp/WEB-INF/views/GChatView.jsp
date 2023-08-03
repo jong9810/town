@@ -30,7 +30,6 @@ $(document).ready(function() {
         
         var message = data.message;
         var sender = data.sender;
-        var count = data.count;
         var user = '<%= (String)session.getAttribute("member_id") %>';
         
         if (sender == user) {
@@ -42,14 +41,10 @@ $(document).ready(function() {
         
         else {
 	        var messageReceived = $('<div>').addClass("message received");
-	        messageReceived.html('<div class="bubble">' + message + '</div>');
+	        messageReceived.html('<div class="sendername">' + sender + '</div><div class="bubble">' + message + '</div>');
 	        
 	        chatArea.append(messageReceived);
         }
-        
-        var comboBox = $('<div>').addClass("combobox");
-        comboBox.html('<select><option value="신고하기">신고하기</option></select>');
-        chatArea.append(comboBox);
         
     };
 
@@ -78,7 +73,7 @@ $(document).ready(function() {
             var message = $("#messageInput").val();
             var sender = '<%= (String)session.getAttribute("member_id") %>';
             var pathname = $(location).attr('search');
-            var touser_id = pathname.substring("?touser_id=".length);
+            var board_id = pathname.substring("?board_id=".length);
             var data = {
                     message: message,
                     sender: sender
@@ -88,9 +83,9 @@ $(document).ready(function() {
           
             $.ajax({
                 type: "POST",
-                url: "/sendChat",
+                url: "/sendGChat",
                 data: { message: message,
-                		touser_id: touser_id
+                		board_id: board_id
                 	},
                 dataType: "text",
                 success: function(response) {
@@ -166,7 +161,7 @@ body {
 .message {
 	display: flex;
 	align-items: flex-start;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
 
 .message .bubble {
@@ -188,9 +183,18 @@ body {
 	color: #333;
 }
 
+.message.received {
+	flex-wrap : wrap;
+}
+
 .message.received .bubble {
 	background-color: #8d98aa;
 	color: #fff;
+}
+
+.message.received .sendername {
+	font-size : 12px;
+	width : 100%;
 }
 
 .input-area {
@@ -275,22 +279,13 @@ body {
 				<c:choose>
 					<c:when test="${list.member_id eq sessionScope.member_id}">
 						<div class = "message sent">
-							<div class="bubble">${list.message_content }</div>
-							<div class="combobox">
-								<select>
-									<option value="신고하기">신고하기</option>
-								</select>
-							</div>
+							<div class="bubble">${list.gmessage_content}</div>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class = "message received">
-							<div class="bubble">${list.message_content }</div>
-							<div class="combobox">
-								<select>
-									<option value="신고하기">신고하기</option>
-								</select>
-							</div>
+							<div class="sendername">${list.member_id}</div>
+							<div class="bubble">${list.gmessage_content}</div>
 						</div>
 					</c:otherwise>
 				</c:choose>
