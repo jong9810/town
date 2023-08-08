@@ -30,8 +30,11 @@ $(document).ready(function() {
         
         var message = data.message;
         var sender = data.sender;
+        var messageid = data.messageid;
         var count = data.count;
         var user = '<%= (String)session.getAttribute("member_id") %>';
+        var comboBox = $('<div>').addClass("combobox");
+        comboBox.html('<ul><li>신고하기</li></ul>');
         
         if (sender == user) {
         	 var messageSent = $('<div>').addClass("message sent");
@@ -42,14 +45,10 @@ $(document).ready(function() {
         
         else {
 	        var messageReceived = $('<div>').addClass("message received");
-	        messageReceived.html('<div class="bubble">' + message + '</div>');
+	        messageReceived.html('<div class="bubble">' + message + '</div><div class="combobox"><ul><li>신고하기</li></ul></div><div class="messageid">' + messageid + '</div>');
 	        
 	        chatArea.append(messageReceived);
         }
-        
-        var comboBox = $('<div>').addClass("combobox");
-        comboBox.html('<select><option value="신고하기">신고하기</option></select>');
-        chatArea.append(comboBox);
         
     };
 
@@ -84,8 +83,6 @@ $(document).ready(function() {
                     sender: sender
                 };
                 
-            websocket.send(JSON.stringify(data));
-          
             $.ajax({
                 type: "POST",
                 url: "/sendChat",
@@ -95,20 +92,37 @@ $(document).ready(function() {
                 dataType: "text",
                 success: function(response) {
                     console.log("Message sent successfully!");
-                    //location.reload();
+                    console.log("온 data값: " + response);
                     $("#messageInput").val("");
                     chatArea.scrollTop(chatArea.prop("scrollHeight"));
+                    
+                    data.messageid = response;
+                    websocket.send(JSON.stringify(data));
                 },
                 error: function(xhr, status, error) {
                     console.error("Error sending message:", error);
                 }            
             });
 
+           
         }
     
     $("#setting_btn").click(function() {
         $("#setting_dropdown_list").toggle();
   });
+    
+    $('.message.received .bubble').click(function() {
+    	var clickedComboBox = $(this).next('.combobox');
+        clickedComboBox.toggle();
+        
+        $('.combobox').not(clickedComboBox).hide();
+      });
+    
+    $('.combobox').click(function() {
+        var messageReceived = $(this).closest(".message.received");
+        var message_id = parseInt(messageReceived.find(".messageid").text());;
+        open("/reportForm_chat?message_id="+message_id, "신고하기", "width=540px, height=530px, top=200px, left=800px, scrollbars=no");
+    });
 });
 
 </script>
@@ -167,6 +181,8 @@ body {
 	display: flex;
 	align-items: flex-start;
 	margin-bottom: 10px;
+	position:relative;
+	
 }
 
 .message .bubble {
@@ -191,6 +207,7 @@ body {
 .message.received .bubble {
 	background-color: #8d98aa;
 	color: #fff;
+	cursor:pointer;
 }
 
 .input-area {
@@ -227,6 +244,33 @@ body {
 	color: #fff;
 	cursor: pointer;
 }
+.messageid {
+	display: none;
+}
+
+.combobox {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    margin: 0;
+    padding : 0;
+}
+
+.combobox ul {
+    cursor: pointer;
+    color: #333;
+    list-style-type: none;
+    padding : 5px;
+    margin : 0;
+}
+
+.combobox ul:hover {
+    background-color: #eaeaea;
+}
 
 #setting_dropdown_list {
     display: none;
@@ -259,16 +303,10 @@ body {
 	    	<span id="exitButton" style="margin-right: auto; padding: 0px 10px; cursor: pointer;">
         		<img style="height: 15px;" src="img/뒤로가기버튼.png">
     		</span>
-    		<span style="margin-center: auto;">CHAT</span>
-    		<span style="margin-left: auto; padding: 0px 10px; cursor: pointer;">
-        		<img style="height: 15px; position:relative;" src="img/설정버튼.png" id="setting_btn">
-   			</span>
+    		
+    		
 
 		</div>
-   			<ul id="setting_dropdown_list">
-	        	<li>신고하기</li>
-	        	<li id="exitButton_dropdown">채팅창 나가기</li>
-	        </ul>
 		<div class="chat-area" id="chatArea">
 			<!-- 채팅 메시지 추가 -->
 			<c:forEach items="${list}" var="list">
@@ -276,21 +314,17 @@ body {
 					<c:when test="${list.member_id eq sessionScope.member_id}">
 						<div class = "message sent">
 							<div class="bubble">${list.message_content }</div>
-							<div class="combobox">
-								<select>
-									<option value="신고하기">신고하기</option>
-								</select>
-							</div>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class = "message received">
 							<div class="bubble">${list.message_content }</div>
 							<div class="combobox">
-								<select>
-									<option value="신고하기">신고하기</option>
-								</select>
+								<ul>
+									<li>신고하기</li>
+								</ul>
 							</div>
+							<div class="messageid">${list.message_id }</div>
 						</div>
 					</c:otherwise>
 				</c:choose>

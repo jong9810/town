@@ -98,5 +98,9 @@ public interface BoardDAO { //안휘주 작성
   	//글 존재여부
   	public int existBoard(int board_id);
   	
+  	//회원이 작성한 글, 댓글 모두 출력안되도록
+  	public int deleteAllBoard(String member_id);
+  	public int deleteAllComment(String member_id);
+  	
 
 }

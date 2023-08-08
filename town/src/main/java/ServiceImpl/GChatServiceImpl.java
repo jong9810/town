@@ -17,6 +17,16 @@ public class GChatServiceImpl implements GChatService {
 
 	@Autowired
 	GChatDAO dao;
+	
+	@Override
+	public int selectGmessageid(GMessageDTO dto) {
+		return dao.selectGmessageid(dto);
+	}
+
+	@Override
+	public GMessageDTO selectGmessagebyid(int gmessage_id) {
+		return dao.selectGmessagebyid(gmessage_id);
+	}
 
 	@Override
 	public int createGchatroom(GChatroomDTO dto) {

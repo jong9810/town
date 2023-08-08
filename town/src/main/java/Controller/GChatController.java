@@ -1,5 +1,7 @@
 package Controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,8 @@ public class GChatController {
 		dto2.setMember_id(member_id);
 		dto2.setBoard_id(board_id);
 		dto2.setGchat_id(gchatid);
+		String chatroom_name = "그룹채팅 " + gchatid;
+		dto2.setChatroom_name(chatroom_name);
 		int result2 = service.createGchatlist(dto2);
 		System.out.println(result2);
 		
@@ -106,9 +110,13 @@ public class GChatController {
 		dto1.setMember_id(member_id);
 		dto1.setGmessage_content(message);
 		dto1.setGchat_id(gchat_id.get(0));
-		int result = service.insertGmessage(dto1);
-		
+		SimpleDateFormat dateFormat = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		String now = dateFormat.format(new Date());
+		dto1.setGmessage_sendAt(now);
+		service.insertGmessage(dto1);
+		int result = service.selectGmessageid(dto1);
 		return result;
 	}
 	
+
 }

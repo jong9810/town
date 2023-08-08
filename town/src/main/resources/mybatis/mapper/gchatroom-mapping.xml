@@ -11,7 +11,7 @@
 	</insert>
 	
 	<insert id = "createGchatlist" parameterType = "gchatlistdto">
-		INSERT INTO gchat_list(member_id, gchat_id, board_id, chatroom_name) VALUES (#{member_id}, #{gchat_id}, #{board_id}, #{board_id});
+		INSERT INTO gchat_list(member_id, gchat_id, board_id, chatroom_name) VALUES (#{member_id}, #{gchat_id}, #{board_id}, #{chatroom_name});
 	</insert>
 	
 	<select id="selectGchat" parameterType = "gchatlistdto">
@@ -33,5 +33,15 @@
 	
 	<select id = "selectGchatlist" parameterType = "gchatlistdto" resultType = "gchatlistdto">
 		SELECT * FROM gchat_list WHERE (member_id = #{member_id});
+	</select>
+	
+	<select id= "selectGmessageid" parameterType = "gmessagedto">
+		SELECT gmessage_id FROM gchat_message WHERE (member_id = #{member_id}) 
+		and (gchat_id = #{gchat_id}) 
+		and (gmessage_sendAt = #{gmessage_sendAt});
+	</select>
+	
+	<select id="selectGmessagebyid" parameterType="int" resultType = "gmessagedto">
+		SELECT * FROM gchat_message WHERE (gmessage_id = #{gmessage_id});
 	</select>
   </mapper>

@@ -17,6 +17,7 @@
 	<result property="board_videourl" column="board_videourl"/>
 	<result property="board_fileurl" column="board_fileurl"/>
 	<result property="place_name" column="place_name"/>
+	<result property="place_road_address" column="place_road_address"/>
 	<result property="place_lat" column="place_lat"/>
 	<result property="place_long" column="place_long"/>
 	<result property="writer" column="writer"/>

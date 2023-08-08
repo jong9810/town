@@ -68,16 +68,16 @@ $(document).ready(function(){
   		if(isChecked){
   			let report_reason = $('input:radio[name="report_reason"]:checked').val();
   			let report_detail = $("#report_detail").val();
-  			let message_id = Number("${dto.message_id}");
+  			let reporter = '<%= (String)session.getAttribute("member_id") %>';
+  			let gmessage_id = Number("${dto.gmessage_id}");
   			let reported_member_id = $("#member_id").text();
-  			let reported_contents = $("#message_content").text();
-  			let reporter = $("#touser_id").text();
+  			let reported_contents = $("#gmessage_content").text();
 
   			$.ajax({
- 				url : 'reportChat',
+ 				url : 'reportGChat',
  				type : 'post',
  				data : {
- 					'message_id' : message_id,
+ 					'gmessage_id' : gmessage_id,
  					'reported_member_id' : reported_member_id,
  					'reported_contents' : reported_contents,
  					'reporter' : reporter,
@@ -110,11 +110,10 @@ $(document).ready(function(){
 <div id="form-wrap">
 	<br>
 	<div id="writer">작성자  | ${dto.member_id}</div>
-	<div id="contents"> 채팅내용  | ${dto.message_content }</div>
+	<div id="contents"> 채팅내용  | ${dto.gmessage_content }</div>
 	<div id="values">
 		<div id="member_id">${dto.member_id}</div>
-		<div id="message_content">${dto.message_content }</div>
-		<div id="touser_id">${dto.touser_id }</div>
+		<div id="gmessage_content">${dto.gmessage_content }</div>
 	</div>
 	<p>신고하시는 사유를 선택해주세요.</p>
 	<form action="reportChat" id="reportChat" method="post">

@@ -252,7 +252,11 @@ public class BoardController1 { //김종인 작성
 		pointmap.put("point_method", "글작성");
 		pointmap.put("point_time", formatDate);
 		pointmap.put("point_get", 5);
-		boolean pointResult = service.addMemberPointOrNot(pointmap);
+		boolean pointResult = service.addMemberPointOrNot(pointmap); // 포인트를 부여했는지 안 했는지
+		boolean gradeUpResult = false; // 회원이 등급 업 했는지 안 했는지
+		if (pointResult) { // 포인트가 부여 됐을 때
+			gradeUpResult = service.memberGradeUp((String) session.getAttribute("member_id"));
+		}
 		
 		// board 테이블에 게시글 insert 하기
 		HashMap<String, Object> result = new HashMap<>();
@@ -268,6 +272,7 @@ public class BoardController1 { //김종인 작성
 		insertResult = service.insertBoard(dto);
 		result.put("insertResult", insertResult);
 		result.put("pointResult", pointResult);
+		result.put("gradeUpResult", gradeUpResult);
 		return result;
 	}
 	
@@ -493,8 +498,7 @@ public class BoardController1 { //김종인 작성
 	@RequestMapping("/noticeUpdateForm")
 	public ModelAndView noticeUpdateForm(
 			HttpSession session,
-			@RequestParam(value="bi", required=false, defaultValue="0") int board_id, 
-			@RequestParam(value="tis", required=false, defaultValue="") String town_ids
+			@RequestParam(value="bi", required=false, defaultValue="0") int board_id
 	) {
 		ModelAndView mv = new ModelAndView();
 		if (session.getAttribute("member_id") == null) {
@@ -504,12 +508,12 @@ public class BoardController1 { //김종인 작성
 			mv.setViewName("redirect:/main");
 			return mv;
 		}
-		if (board_id == 0) {
-			board_id = 101;
-		}
-		if (town_ids.equals("")) {
-			town_ids = service.getNoticeTownIds(board_id);
-		}
+		// # 공지사항이 삭제된 경우 게시글이 존재하지 않습니다 페이지로 이동
+//		if (board_id == 0) {
+//			mv.setViewName("");
+//			return mv;
+//		}
+		String town_ids = service.getNoticeTownIds(board_id);
 		BoardDTO dto = service.getNoticeDetail(board_id);
 		List<String> townNameList = service.getAllTownName();
 		mv.addObject("townNameList", townNameList);
@@ -519,7 +523,7 @@ public class BoardController1 { //김종인 작성
 		return mv;
 	}
 	
-	@PostMapping("/noticeUpdateForm")
+	@PostMapping("/noticeUpdateEnd")
 	@ResponseBody
 	public HashMap<String, Object> noticeUpdateEnd(
 			BoardDTO dto, HttpSession session,

@@ -21,4 +21,6 @@ public interface GChatDAO {
 	List<GChatlistDTO> checkGchat(GChatlistDTO dto);
 	List<GMessageDTO> summonMessage(GMessageDTO dto);
 	public ArrayList<GChatlistDTO> selectGchatlist(GChatlistDTO dto);
+	public int selectGmessageid(GMessageDTO dto);
+	public GMessageDTO selectGmessagebyid(int gmessage_id);
 }

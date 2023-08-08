@@ -13,7 +13,7 @@ import Pagination.SearchDTO;
 
 public interface BoardService { //안휘주 작성
 	
-	public BoardDTO updateViewcntAndGetDetail(int board_id);
+	public int updateViewcnt(int board_id);
 	public int getTotalCommentcnt(int board_id);
 	public List<CommentDTO> commentPagingList(HashMap<String, String> map);
 	public MemberDTO boardWriterProfile(String writer);
@@ -57,6 +57,9 @@ public interface BoardService { //안휘주 작성
   	
   	//글 존재여부
   	public int existBoard(int board_id);
-
+  	
+  	//회원이 작성한 글, 댓글 모두 출력안되도록
+  	public int deleteAllBoard(String member_id);
+  	public int deleteAllComment(String member_id);
   	
 }

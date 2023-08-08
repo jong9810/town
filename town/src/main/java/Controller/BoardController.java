@@ -95,7 +95,7 @@ public class BoardController { //안휘주 작성
 		}
 		//보드 있으면
 		else {
-		BoardDTO dto = service.updateViewcntAndGetDetail(board_id);
+		BoardDTO dto = service.getDetail(board_id);
 		//글쓴사람 정보
 		MemberDTO writerDto = service.boardWriterProfile(dto.getWriter());
 		
@@ -265,8 +265,8 @@ public class BoardController { //안휘주 작성
 		
 		//글 수정폼 열기
 		@RequestMapping("/boardUpdateForm")
-		public ModelAndView boardUpdateForm(int board_id, int town_id) {
-			BoardDTO dto = service.getDetail(board_id);
+		public ModelAndView boardUpdateForm(int bi, int town_id) {
+			BoardDTO dto = service.getDetail(bi);
 			ModelAndView mv = new ModelAndView();
 			mv.addObject("dto", dto);
 			mv.addObject("boardTi", town_id);
@@ -332,6 +332,13 @@ public class BoardController { //안휘주 작성
 			mv.setViewName("photoBoard_Search");
 			return mv;			
 		}
+		
+		//조회수 증가
+		@RequestMapping(value="/updateViewcnt", produces = {"application/json;charset=utf-8"})
+		public @ResponseBody int updateViewcnt (int bi) {
+			return service.updateViewcnt(bi);
+		}
+		
 						
 
 		

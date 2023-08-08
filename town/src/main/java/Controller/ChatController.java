@@ -1,6 +1,8 @@
 package Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,12 +97,17 @@ public class ChatController {
 		List<Integer> chat_id = service.selectChatid(dto5);
 		int firstchatid = chat_id.get(0);
 		dto5.setChat_id(firstchatid);
+		SimpleDateFormat dateFormat = new  SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		String now = dateFormat.format(new Date());
+		dto5.setMessage_sendAt(now);
+		
 		System.out.println(touser_id);
 		System.out.println(firstchatid);
 		dto5.setMessage_content(message);
-		int result = service.insertMessage(dto5);
+		service.insertMessage(dto5);
+		int messageid = service.selectMessageid(dto5);
 		
-		return result;
+		return messageid;
 	}
 
 	@RequestMapping("/chatlist")
@@ -160,5 +167,6 @@ public class ChatController {
 		mv.setViewName("chatList");
 		return mv;
 	}
+	
 
 }

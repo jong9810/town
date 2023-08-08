@@ -43,14 +43,14 @@ $(document).ready(function(){
 					 </form>
 				  </li>
 			      <li class="innerMenu">
-			    	  <form id="admin_chat" action="reportedList" method="post">			    	  	
-			 			<input type="hidden" value="message_id" name="whatId">
+			    	  <form id="admin_chat" action="reportedChatList" method="post">			    	  	
+			    	  	<input type="hidden" name="search" value="notYet" />			    	  	
 			 			<input type="submit" value="신고된 채팅(개인)" id="admin_chatList_btn" class="admin_group">
 					 </form>
 				  </li>
 			      <li class="innerMenu">
-			    	  <form id="admin_groupChat" action="reportedList" method="post">			    	  	
-			 			<input type="hidden" value="gmessage_id" name="whatId">
+			    	  <form id="admin_groupChat" action="reportedGChatList" method="post"> <!-- action값 주기 -->  	  	
+			    	  	<input type="hidden" name="search" value="notYet" />			    	  	
 			 			<input type="submit" value="신고된 채팅(그룹)" id="admin_groupChatList_btn" class="admin_group">
 					 </form>
 				  </li>

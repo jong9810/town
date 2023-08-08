@@ -31,7 +31,17 @@ public interface ReportDAO { //안휘주 작성
   	public int reportedCommentCnt(SearchDTO dto);
   	public List<ReportDTO> reportedCommentList(SearchDTO dto);
   	
- 
+  	public int reportChat(ReportDTO dto);
+  	public int reportGChat(ReportDTO dto);
+  	//신고 결과 업데이트
+  	public int updateReportResult(ReportDTO dto);
+  	
+  	//채팅 신고내용 조회-----------------------------------------------------------------------
+  	public int reportedChatCnt(SearchDTO dto);
+  	public List<ReportDTO> reportedChatList(SearchDTO dto);
+  	
+  	public int reportedGChatCnt(SearchDTO dto);
+  	public List<ReportDTO> reportedGChatList(SearchDTO dto);
   	
   	
 }

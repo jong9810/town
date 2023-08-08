@@ -155,6 +155,7 @@ $(document).ready(function() {
 						alertResult += " 포인트 5점이 지급되었습니다.";
 					}
 					alert(alertResult);
+					if (response.gradeUpResult) alert("축하드립니다! 회원 등급이 올랐습니다.");
 					if (board_name_inner === "오늘의 사진" || 
 							board_name_inner === "역대 당선작" || 
 							board_name_inner === "분실물센터") {

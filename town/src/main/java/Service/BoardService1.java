@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Dto.BoardDTO;
+import jakarta.servlet.http.HttpSession;
 
 public interface BoardService1 { //김종인 작성
 	// 게시글 작성
@@ -37,11 +38,13 @@ public interface BoardService1 { //김종인 작성
 	
 	// 회원 프로필 사진 변경
 	int updateProfileImage(String member_id, String profile_image);
-	// 회원이 관리자인지 아닌지 판단
-	boolean isAdmin(String member_id);
+	
 	// 동네 이름 모두 가져오기(동네 아이디 오름차순으로)
 	List<String> getAllTownName();
 	
 	// 글 작성시 포인트 횟수 제한에 따라 부여하거나 안함
 	boolean addMemberPointOrNot(HashMap<String, Object> pointmap);
+	
+	// 회원 등급 업 관련 서비스
+	public boolean memberGradeUp(String member_id);
 }

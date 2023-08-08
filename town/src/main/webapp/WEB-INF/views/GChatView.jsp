@@ -30,18 +30,19 @@ $(document).ready(function() {
         
         var message = data.message;
         var sender = data.sender;
+        var gmessageid = data.gmessageid;
         var user = '<%= (String)session.getAttribute("member_id") %>';
         
         if (sender == user) {
         	 var messageSent = $('<div>').addClass("message sent");
-             messageSent.html('<div class="bubble">' + message + '</div>');
+             messageSent.html('<div class="bubble">' + message + + '</div>');
 
              chatArea.append(messageSent);	
         }
         
         else {
 	        var messageReceived = $('<div>').addClass("message received");
-	        messageReceived.html('<div class="sendername">' + sender + '</div><div class="bubble">' + message + '</div>');
+	        messageReceived.html('<div class="sendername">' + sender + '</div><div class="bubble">' + message + '</div><div class="combobox"><ul><li>신고하기</li></ul></div><div class="gmessageid">' + gmessageid + '</div>');
 	        
 	        chatArea.append(messageReceived);
         }
@@ -79,8 +80,6 @@ $(document).ready(function() {
                     sender: sender
                 };
                 
-            websocket.send(JSON.stringify(data));
-          
             $.ajax({
                 type: "POST",
                 url: "/sendGChat",
@@ -90,9 +89,12 @@ $(document).ready(function() {
                 dataType: "text",
                 success: function(response) {
                     console.log("Message sent successfully!");
-                    //location.reload();
+                    console.log("온 data값: " + response);
                     $("#messageInput").val("");
                     chatArea.scrollTop(chatArea.prop("scrollHeight"));
+                    
+                    data.gmessageid = response;
+                    websocket.send(JSON.stringify(data));
                 },
                 error: function(xhr, status, error) {
                     console.error("Error sending message:", error);
@@ -104,6 +106,19 @@ $(document).ready(function() {
     $("#setting_btn").click(function() {
         $("#setting_dropdown_list").toggle();
   });
+    
+    $('.message.received .bubble').click(function() {
+    	var clickedComboBox = $(this).next('.combobox');
+        clickedComboBox.toggle();
+        
+        $('.combobox').not(clickedComboBox).hide();
+      });
+    
+    $('.combobox').click(function() {
+    	var messageReceived = $(this).closest(".message.received");
+        var gmessage_id = parseInt(messageReceived.find(".gmessageid").text());;
+        open("/reportForm_gchat?gmessage_id="+gmessage_id, "신고하기", "width=540px, height=530px, top=200px, left=800px, scrollbars=no");
+    })
 });
 
 </script>
@@ -190,6 +205,7 @@ body {
 .message.received .bubble {
 	background-color: #8d98aa;
 	color: #fff;
+	cursor:pointer;
 }
 
 .message.received .sendername {
@@ -232,6 +248,30 @@ body {
 	cursor: pointer;
 }
 
+.combobox {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    margin: 0;
+    padding : 0;
+}
+
+.combobox ul {
+    cursor: pointer;
+    color: #333;
+    list-style-type: none;
+    padding : 5px;
+    margin : 0;
+}
+
+.combobox ul:hover {
+    background-color: #eaeaea;
+}
+
 #setting_dropdown_list {
     display: none;
     position: absolute;
@@ -255,6 +295,10 @@ body {
 #setting_dropdown_list li:hover {
     background-color: #eaeaea;
 }
+
+.gmessageid {
+	display : none;
+}
 </style>
 </head>
 <body>
@@ -263,16 +307,9 @@ body {
 	    	<span id="exitButton" style="margin-right: auto; padding: 0px 10px; cursor: pointer;">
         		<img style="height: 15px;" src="img/뒤로가기버튼.png">
     		</span>
-    		<span style="margin-center: auto;">CHAT</span>
-    		<span style="margin-left: auto; padding: 0px 10px; cursor: pointer;">
-        		<img style="height: 15px; position:relative;" src="img/설정버튼.png" id="setting_btn">
-   			</span>
+    		
 
 		</div>
-   			<ul id="setting_dropdown_list">
-	        	<li>신고하기</li>
-	        	<li id="exitButton_dropdown">채팅창 나가기</li>
-	        </ul>
 		<div class="chat-area" id="chatArea">
 			<!-- 채팅 메시지 추가 -->
 			<c:forEach items="${list}" var="list">
@@ -286,6 +323,12 @@ body {
 						<div class = "message received">
 							<div class="sendername">${list.member_id}</div>
 							<div class="bubble">${list.gmessage_content}</div>
+							<div class="combobox">
+								<ul>
+									<li>신고하기</li>
+								</ul>
+							</div>
+							<div class="gmessageid">${list.gmessage_id }</div>
 						</div>
 					</c:otherwise>
 				</c:choose>

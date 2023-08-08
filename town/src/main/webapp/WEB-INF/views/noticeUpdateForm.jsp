@@ -77,7 +77,7 @@ $("#board-name").val(town_ids).attr("selected", "selected");
 
 //작성완료 버튼 클릭 이벤트
 $("#write-btn").on("click", function() {
-	let board_id = 101; //"${param.bi}"
+	let board_id = "${param.bi}";
 	let board_name_inner = "공지사항";
 	let board_title = $("#write-title").val(); // 게시글 제목
 	let board_contents = $("#quill_html").val(); // 게시글 내용
@@ -127,7 +127,7 @@ $("#write-btn").on("click", function() {
 	} //while
 	
 	$.ajax({
-		url: "/noticeUpdateForm",
+		url: "/noticeUpdateEnd",
 		data: {
 			"board_id": board_id,
 			"board_name_inner": board_name_inner,

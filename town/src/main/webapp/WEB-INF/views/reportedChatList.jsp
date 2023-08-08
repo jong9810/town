@@ -75,7 +75,7 @@
 $(document).ready(function() {
 	topButtonCss();
 //----------------------------------------- page 버튼 ----------------------------------------------------------------
- 	//페이지 버튼 눌렀을때 해당페이지 보여주기
+  	//페이지 버튼 눌렀을때 해당페이지 보여주기
  	$(".photoPageNumBtn").on('click', function(){
  		$("#page").val($(this).val());
  		$("#adminFormPage").submit();
@@ -118,130 +118,9 @@ $(document).ready(function() {
 	//해당 글 보러가기
 	$(".moreDetailBtn").on('click', function(){
 		let bi = $(this).prev("#boardId").val();
-		$.ajax({
-			url : 'updateViewcnt',
-			type : 'post',
-			data : {'bi' : bi},
-			success : function(response){
-				if(response > 0) {
-					open("/boarddetail?bi="+bi , "해당글상세조회", "width=900px, height=800px, top=200px, left=800px");
-				}
-				else {
-					alert("삭제된 글입니다. 상세 페이지로 이동 불가합니다.");
-				}
-			},
-            error: function(request,status,error) {
-	      		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	      		console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	      	}
-		});//ajax	
+		open("/boarddetail?bi="+bi , "해당글상세조회", "width=900px, height=800px, top=200px, left=800px");
 	});
 	
-	//해당 글 삭제
-	$(".adminDeleteBoard").on('click', function(){
-		let thisBoardId = $(this).attr('id');
-		let thisReportId = $(this).prevAll(".reportId").val();	
-		//alert("thisBoardId = " + thisBoardId + "/ thisReportId = " + thisReportId);
-		if(confirm("해당 글을 삭제하시겠습니까?") == true){
-			$.ajax({
-				url : 'deleteboard',
-				type : 'post',
-				data : {'board_id': thisBoardId},
-				success : function(response){
-					if(response > 0) {
-						$.ajax({
-							url : 'updateReportResult',
-							type : 'post',
-							data : {'report_id': thisReportId, 'report_result' : '글 삭제 처리'},
-							success : function(response){
-								if(response > 0) {
-									alert("해당 글을 삭제 처리 하였습니다.");	
-									location.reload(); //현재 페이지 새로고침
-								}
-							},
-							error : function(request, status, e){
-								alert("코드=" + request.status + "\n" + "메시지=" + request.responseText + "\n" + "error=" + e);
-							}
-						});//ajax 	
-					}
-				},
-				error : function(request, status, e){
-					alert("코드=" + request.status + "\n" + "메시지=" + request.responseText + "\n" + "error=" + e);
-				}
-			});//ajax
-		}
-		else {
-			return ;
-		}
-	});
-	
-	//처벌 없음
-	$(".adminNoPenalty").on('click', function(){
-		let thisReportId = $(this).attr('id');
-		
-		if(confirm("해당 글을 처벌 없음으로 처리하시겠습니까?") == true){
-			$.ajax({
-				url : 'updateReportResult',
-				type : 'post',
-				data : {'report_id': thisReportId, 'report_result' : '처벌 없음'},
-				success : function(response){
-					if(response > 0) {
-						alert("처벌 없음으로 처리 하였습니다.");	
-						location.reload(); //현재 페이지 새로고침
-					}
-				},
-				error : function(request, status, e){
-					alert("코드=" + request.status + "\n" + "메시지=" + request.responseText + "\n" + "error=" + e);
-				}
-			});//ajax 	
-		}
-		else {
-			return ;
-		}
-	});
-	
-	//회원 탈퇴시키기
-	$(".adminDeleteMember").on('click', function(){
-		let memberId = $(this).prevAll(".reportedMemId").val();
-		let thisReportId = $(this).prevAll(".reportId").val();
-		
-		if(confirm("해당 회원을 강제 탈퇴처리하시겠습니까?") == true){
-			$.ajax({
-				url : 'admindeletemember',
-				type : 'post',
-				data : {'member_id': memberId},
-				success : function(response){
-					if(response == 2) {
-						$.ajax({
-							url : 'updateReportResult',
-							type : 'post',
-							data : {'report_id': thisReportId, 'report_result' : '회원 탈퇴 처리'},
-							success : function(response){
-								if(response > 0) {
-									alert("해당 회원을 탈퇴 처리 하였습니다.");	
-									location.reload(); //현재 페이지 새로고침
-								}
-							},
-							error : function(request, status, e){
-								alert("코드=" + request.status + "\n" + "메시지=" + request.responseText + "\n" + "error=" + e);
-							}
-						});//ajax 	
-					}
-					else {
-						alert("문제가 발생하였습니다. 데이터베이스를 확인하세요.");
-					}
-				},
-				error : function(request, status, e){
-					alert("코드=" + request.status + "\n" + "메시지=" + request.responseText + "\n" + "error=" + e);
-				}
-			});//ajax
-		}
-		else {
-			return ;
-		}
-	});
-	
-
 	
 	
 }); //ready
@@ -261,13 +140,13 @@ $(document).ready(function() {
 	
 		<div id="adminList_top_btnBox">
 			<div id="notYetList">
-				 <form id="reportedBoardListForm" action="reportedBoardList" method="post">				 			    	  	
+				 <form id="reportedBoardListForm" action="reportedChatList" method="post">				 			    	  	
 					<input type="hidden" name="search" value="notYet" />
 					<input type="submit" id="notYetListBtn" value="미 처리 내역" />
 				 </form>
 			</div>
 			<div id="doneList">
-				<form id="completedBoardListForm" action="reportedBoardList" method="post">			    	  	
+				<form id="completedBoardListForm" action="reportedChatList" method="post">			    	  	
 					<input type="hidden" name="search" value="done" />
 					<input type="submit" id="doneListBtn" value="처리 완료 내역" />
 				 </form>
@@ -279,24 +158,24 @@ $(document).ready(function() {
 				<tr>
 					<th style="width: 4%;">번호</th>
 					<th style="width: 10%;">작성자</th>
-					<th style="width: 20%;">제목/내용</th>
+					<th style="width: 20%;">채팅내용</th>
 					<th style="width: 10%;">신고자</th>
-					<th style="width: 10%;">신고 사유</th>
+					<th style="width: 14%;">신고 사유</th>
 					<th style="width: 9%;">신고 날짜</th>
 					<c:choose>
 						<c:when test="${searchdto.searchType1 == 'notYet'}">
-							<th style="width: 22%;">신고 처리</th>
-						</c:when>
+							<th style="width: 17%;">신고 처리</th>
+					 	</c:when>
 						<c:otherwise>
-							<th style="width: 15%;">신고 처리 결과</th>						
+							<th style="width: 17%;">신고 처리 결과</th>						
 						</c:otherwise>					
 					</c:choose>
 				</tr>
 			</thead>
 			<tbody>
-			<c:forEach items="${response.list }" var="dto">
+			<c:forEach items="${response.list}" var="dto">
 			<c:choose>
-				<c:when test="${searchdto.searchType1 == 'notYet'}">
+				 <c:when test="${searchdto.searchType1 == 'notYet'}">
 					<tr class="list_tr">
 						<td>${dto.report_id}</td><td>${dto.reported_member_id}</td>
 						<td>${dto.reported_contents }</td>
@@ -309,12 +188,10 @@ $(document).ready(function() {
 							${regDate}
 						</td>
 						 <td>
-						 	 <input type="hidden" class="reportId" value="${dto.report_id}" />
-						 	 <input type="hidden" class="reportedMemId" value="${dto.reported_member_id}" />
-							 <button class="adminDeleteBoard" id="${dto.board_id}">글삭제</button>	
+						 	<input type="hidden" class="reportedMemId" value="${dto.reported_member_id}" />
+							 <button class="adminDeleteBoard" id="${dto.message_id}">채팅삭제</button>	
 							 <button class="adminDeleteMember" id="${dto.reported_member_id}_delete">회원삭제</button>
 							 <button class="adminStopMember" id="${dto.reported_member_id}_stop">회원정지</button>
-							 <button class="adminNoPenalty" id="${dto.report_id}">처벌없음</button>
 						 </td>
 					</tr>
 					<tr class="report_detail_view"><td colspan="7" style="text-align : left; margin-left : 10px;">
@@ -323,22 +200,22 @@ $(document).ready(function() {
 						<div class="grid_container">
 							<div class="one">신고 상세 사유</div>
 							<div class="two">${dto.report_detail}</div>
-							<div class="three">글 작성자</div>
+							<div class="three">채팅 작성자</div>
 							<div class="four">${dto.reported_member_id}</div>
-							<div class="five">글 제목</div>
-							<div class="six"> ${dto.boarddto.board_title}</div>
-							<div class="seven">글 내용</div>
+							<div class="five">채팅 내용</div>
+							<div class="six"> ${dto.reported_contents}</div>
+<%-- 							<div class="seven">글 내용</div>
 							<div class="eight">
 								${dto.boarddto.board_contents}
-							</div>
+							</div> --%>
 							<div class="nine">
-							 	<input type="hidden" id="boardId" value="${dto.board_id}" />
+							 	<input type="hidden" id="boardId" value="${dto.message_id}" />
 								<button class="moreDetailBtn" >상세페이지로 이동</button>
 							</div>
 						</div>	
 					</div>
 					</td></tr>
-				</c:when>
+				</c:when> 
 				
 				<c:otherwise>
 					<tr class="list_tr">

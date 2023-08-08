@@ -58,14 +58,14 @@
 									<td>
 										<c:if test="${(param.sort eq 'board_preview') || (param.sort eq 'board_all')}">
 											<c:if test='${searchPreview[vs.index] eq ""}'>
-												<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title}</a>
+												<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title}</a>
 											</c:if>
 											<c:if test='${!(searchPreview[vs.index] eq "")}'>
-												<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title} / ${searchPreview[vs.index]}</a>
+												<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title} / ${searchPreview[vs.index]}</a>
 											</c:if>
 										</c:if>
 										<c:if test="${!((param.sort eq 'board_preview') || (param.sort eq 'board_all'))}">
-											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title}</a>
+											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title}</a>
 										</c:if>
 										<c:if test="${includeImg[vs.index]}">
 											<img class="include" src="/img/image_icon.png">
@@ -93,14 +93,14 @@
 								<td>
 									<c:if test="${(param.sort eq 'board_preview') || (param.sort eq 'board_all')}">
 										<c:if test='${searchPreview[vs.index] eq ""}'>
-											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title}</a>
+											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title}</a>
 										</c:if>
 										<c:if test='${!(searchPreview[vs.index] eq "")}'>
-											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title} / ${searchPreview[vs.index]}</a>
+											<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title} / ${searchPreview[vs.index]}</a>
 										</c:if>
 									</c:if>
 									<c:if test="${!((param.sort eq 'board_preview') || (param.sort eq 'board_all'))}">
-										<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title">${boardlist.board_title}</a>
+										<a href="/boarddetail?bi=${boardlist.board_id}" class="writing-title" id="${boardlist.board_id}">${boardlist.board_title}</a>
 									</c:if>
 									<c:if test="${includeImg[vs.index]}">
 										<img class="include" src="/img/image_icon.png">
@@ -164,6 +164,26 @@
 </body>
 <script>
 $(document).ready(function() {
+	//글 누르면 조회수+1, 해당 글 상세페이지로 이동
+  $(".writing-title").on('click', function(){
+      const boardId = $(this).attr('id');
+      $.ajax({
+          url : 'updateViewcnt',
+          type : 'post',
+          data : {'bi' : boardId},
+          success : function(response){
+              if(response > 0) {}
+              else {
+                  alert("문제가 발생했습니다.");
+              }
+          },
+          error: function(request,status,error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+      });//ajax
+  });//글 1개 조회
+	
 	// 만약 url에 sort 속성값이 있으면 검색 기준 sort 값으로 변경
 	if ("${param.sort}" !== "") {
 		$("#selectBox").val("${param.sort}").prop("selected", true);

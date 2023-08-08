@@ -19,11 +19,14 @@
 	<div id="menu"> 
 		<div id="board_menu">
 			<ul class="outerMenu">
+			  <li class="innerMenu notice">
+			    공지사항
+			  </li>			
 			  <li>
 			    지금 우리 동네
 			    <ul class="innerMenu">
 			      <li class="innerMenu">나의 일상</li>
-			      <li class="innerMenu">사건,사고 소식</li>
+			      <li class="innerMenu">사건, 사고 소식</li>
 			    </ul>
 			  </li>
 			  <li>
@@ -54,7 +57,6 @@
 			      <li class="innerMenu">새로 오픈했어요</li>
 			    </ul>
 			  </li>
-			  <li>HOT 게시판</li>
 			</ul>
 		</div>
 	</div>

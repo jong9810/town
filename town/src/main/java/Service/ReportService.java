@@ -1,5 +1,7 @@
 package Service;
 
+import java.util.List;
+
 import Dto.CommentDTO;
 import Dto.ReportDTO;
 import Pagination.PagingResponse;
@@ -23,5 +25,12 @@ public interface ReportService { //안휘주 작성
   	//신고+댓글 테이블조인 리스트
   	public PagingResponse<ReportDTO> reportedCommentList(SearchDTO dto);
   	
+  	public int reportChat(ReportDTO dto);
+  	public int reportGChat(ReportDTO dto);
+  	//신고 결과 업데이트
+  	public int updateReportResult(ReportDTO dto);
   	
+  	//채팅 신고내용 조회 -----------------------------------------------------------------------
+  	public PagingResponse<ReportDTO> reportedChatList(SearchDTO dto);
+  	public PagingResponse<ReportDTO> reportedGChatList(SearchDTO dto);
 }

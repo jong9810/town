@@ -24,10 +24,9 @@ public class BoardServiceImpl implements BoardService { //안휘주 작성
 	@Autowired
 	BoardDAO dao;
 	
-	//선택된 게시물 조회수 증가&조회
-	public BoardDTO updateViewcntAndGetDetail(int board_id) {
-		int updaterow = dao.updateViewcnt(board_id);
-		return dao.getDetail(board_id);
+	//선택된 게시물 조회수 증가
+	public int updateViewcnt(int board_id) {
+		return dao.updateViewcnt(board_id);
 	}
 	
 	//해당글의 댓글, 대댓글 전체 개수 가져오기
@@ -187,6 +186,12 @@ public class BoardServiceImpl implements BoardService { //안휘주 작성
   		return dao.existBoard(board_id);
   	}
   	
-
+  	//회원이 작성한 글, 댓글 모두 출력안되도록
+  	public int deleteAllBoard(String member_id) {
+  		return dao.deleteAllBoard(member_id);
+  	};
+  	public int deleteAllComment(String member_id) {
+  		return dao.deleteAllComment(member_id);
+  	};
   	
 }//class

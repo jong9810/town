@@ -51,11 +51,15 @@ public interface BoardDAO1 { //김종인 작성
 	
 	// 회원 프로필 사진 변경
 	int updateProfileImage(String member_id, String profile_image);
-	// 회원이 관리자인지 아닌지 판단
-	int isAdmin(String member_id);
 	
 	// 글 작성시 포인트 횟수 제한에 따라 부여하거나 안함
 	int getWriteBoardCnt(HashMap<String, Object> map);
 	int insertWriteBoardPoint(HashMap<String, Object> map);
 	int updateMemberPoint(HashMap<String, Object> map);
+	
+	// 회원 등급 업 관련 sql
+	List<HashMap<String, Object>> getGradeTable(); // grade 테이블에서 필요한 컬럼 가져오기
+	HashMap<String, Object> getMemberGradeAndPoint(String member_id); // 회원의 현재 등급과 포인트 가져오기
+	int updateMemberGrade(HashMap<String, Object> gradeUpMap); // 회원의 등급을 업데이터
+	
 }

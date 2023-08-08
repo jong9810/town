@@ -48,6 +48,10 @@
 					<div id="my_id">${my_info.member_id}</div>
 					<div id="my_email">${my_info.email}</div>
 				</div> 
+				<div id="my_grade_box">
+					<progress value="58.8" max="100"></progress>
+					<span>50/100</span>
+				</div>
 			</div>
 			<div id="myinfo_table">
 				<table>
