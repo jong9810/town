@@ -12,6 +12,7 @@ import Dto.BoardDTO;
 import Dto.CommentDTO;
 import Dto.GoodHateDTO;
 import Dto.MemberDTO;
+import Dto.PointDTO;
 import Dto.ReportDTO;
 import Pagination.Pagination;
 import Pagination.PagingResponse;
@@ -194,4 +195,21 @@ public class BoardServiceImpl implements BoardService { //안휘주 작성
   		return dao.deleteAllComment(member_id);
   	};
   	
+  	//댓글 쓰면 포인트부여
+  	public int insertPointComment(PointDTO dto) {
+  		return dao.insertPointComment(dto);
+  	};
+  	public int updateMemberPointComment(PointDTO dto) {
+  		return dao.updateMemberPointComment(dto);
+  	};
+  	
+  	//멤버 등급 이미지 가져오기
+  	public String getMemberGrdaeImg(String member_id) {
+  		return dao.getMemberGrdaeImg(member_id);
+  	};
+  	
+  	//소모임 채팅 생성 여부 확인
+  	public int Check(int board_id) {
+  		return dao.Check(board_id);
+  	};
 }//class

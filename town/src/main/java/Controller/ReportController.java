@@ -45,6 +45,7 @@ public class ReportController { //안휘주 작성
 	@Qualifier("GChatService")
 	GChatService service4;
 
+	@Autowired
 	@Qualifier("SignService")
 	SignService Ss;
 	
@@ -81,8 +82,13 @@ public class ReportController { //안휘주 작성
 	}
 	
 	//관리자페이지 들어가기
-	@RequestMapping("/manager3")
-	public ModelAndView manager3() {	
+	@RequestMapping("/adminManager")
+	public ModelAndView manager3(HttpSession session) {	
+		ModelAndView main = new ModelAndView();
+		if ((Integer)session.getAttribute("member_role") != 1) {
+			main.setViewName("main");
+			return main;
+		}
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("managerPage3");
 		return mv;
@@ -238,11 +244,54 @@ public class ReportController { //안휘주 작성
 		int a = Ss.deletememberinsert(map);
 		int b = Ss.deletemember(member_id);
 		//이 회원이 작성한 글, 댓글 모두 감추기
-		//service2.deleteAllBoard(member_id);
-		//service2.deleteAllComment(member_id);
+		service2.deleteAllBoard(member_id);
+		service2.deleteAllComment(member_id);
 		return a+b;
 	}
 	
+
+	@RequestMapping("/deletechatmessage")
+	@ResponseBody
+	public int deletechatmessage(int message_id) {
+		MessageDTO dto = new MessageDTO();
+		dto.setMessage_id(message_id);
+		dto.setMessage_content("채팅이 관리자에 의해 삭제되었습니다.");
+		
+		service3.deletechatmessage(dto);
+		return 0;
+	}
+
+	//회원 정지(글)
+	@PostMapping(value="/adminBoardStopMember", produces = {"application/json;charset=utf-8"})
+	public @ResponseBody int adminBoardStopMember(String member_id, int stopDateNum, int board_id) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("stopDateNum",stopDateNum);
+		int a = service.updateMemberStopDate(map);
+		int b = service2.deleteBoard(board_id);
+		return a+b;
+	}
 	
+	//회원 정지(댓글)
+	@PostMapping(value="/adminCommentStopMember", produces = {"application/json;charset=utf-8"})
+	public @ResponseBody int adminCommentStopMember(String member_id, int stopDateNum, int comment_id) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("member_id", member_id);
+		map.put("stopDateNum",stopDateNum);
+		int a = service.updateMemberStopDate(map);
+		int b = service2.deleteComment(comment_id);
+		return a+b;
+	}
+
+	@RequestMapping("/deletegchatmessage")
+	@ResponseBody
+	public int deletegchatmessage(int gmessage_id) {
+		GMessageDTO dto = new GMessageDTO();
+		dto.setGmessage_id(gmessage_id);
+		dto.setGmessage_content("채팅이 관리자에 의해 삭제되었습니다.");
+		
+		service4.deletegchatmessage(dto);
+		return 0;
+	}
 	
 }//class

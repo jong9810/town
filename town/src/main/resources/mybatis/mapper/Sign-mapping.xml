@@ -72,6 +72,12 @@
 	<select id="admincnt" parameterType="String" resultType="int">
 		SELECT COUNT(*) FROM member where member_role=1;
 	</select>
-
-
+	
+	<!-- 마이페이지 경험치 바 구현하기 -->
+	<select id="getMemberGradeInfo" parameterType="String" resultType="hashmap">
+		select grade_image, grade_cut_left, grade_cut_right 
+		from grade g join member m
+		on g.grade_name = m.grade_name
+		where member_id = #{member_id}
+	</select>
   </mapper>

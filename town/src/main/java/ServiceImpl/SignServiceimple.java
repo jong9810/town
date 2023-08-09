@@ -85,5 +85,11 @@ public class SignServiceimple implements SignService{
 	public int admincnt() {
 		return dao.admincnt();
 	}
+	
+	// 회원 등급 정보(경험치바 구현)
+	@Override
+	public HashMap<String, Object> getMemberGradeInfo(String member_id) {
+		return dao.getMemberGradeInfo(member_id);
+	}
 
 }

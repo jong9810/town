@@ -16,6 +16,7 @@
 		<typeAlias type="Dto.GMessageDTO" alias="gmessagedto"/>
 		<typeAlias type="Dto.GChatlistDTO" alias="gchatlistdto"/>
 		<typeAlias type="Dto.GChatroomDTO" alias="gchatroomdto"/>
+		<typeAlias type="Dto.PointDTO" alias="pointdto"/>
 	</typeAliases>
 	
 </configuration>

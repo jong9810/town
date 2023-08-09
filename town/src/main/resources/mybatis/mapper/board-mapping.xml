@@ -237,5 +237,28 @@
 	update comment set printout=false where comment_writer=#{member_id}
 </update>
 
+<!-- 댓글 작성시 포인트테이블에 넣기 -->
+<insert id="insertPointComment" parameterType="pointdto">
+	insert point (member_id, point_method, point_get) 
+		values (#{member_id}, #{point_method}, #{point_get})
+</insert>
+ 
+<!-- 댓글 작성시 해당회원에게 3점 부여 -->
+<update id="updateMemberPointComment" parameterType="pointdto">
+	update member set point = point + #{point_get} where member_id = #{member_id}
+</update>
+
+<!-- 회원 등급 이미지 가져오기 -->
+<select id="getMemberGrdaeImg" parameterType="String" resultType="String">
+	select grade_image from grade g join member m
+	on g.grade_name = m.grade_name 
+	where member_id = #{member_id}
+</select>
+
+<!-- 소모임 채팅 생성 여부 확인 -->
+<select id="Check" parameterType="int" resultType="int">
+select count(board_id) from gchat_room where board_id = #{board_id}
+</select>
+
 </mapper>
 
