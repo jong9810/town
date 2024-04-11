@@ -1,4 +1,4 @@
-![KakaoTalk_20230824_103139634](https://github.com/ha-neu1/DBOLeague/assets/132437952/b88f82fc-8c6f-4cdc-b9b9-baff5f19eebc)
+![동네일보헤더](https://github.com/jong9810/town/assets/109285716/5ab933ef-e0bc-4e5d-9d8d-d676b9ddd047)
 
 
 
