@@ -29,7 +29,7 @@
 
 ## 💻ERD
 
-![erd](https://github.com/ha-neu1/DBOLeague/assets/107821879/41e09627-93d5-4115-b057-161dbdebd1fb)
+![동네일보erd](https://github.com/jong9810/town/assets/109285716/3ed83cf8-ebfd-42cb-b02f-0802f60dc6ff)
 
 
 ## 📌 주요 기능
