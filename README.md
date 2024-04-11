@@ -1,4 +1,4 @@
-![동네일보헤더](https://github.com/jong9810/town/assets/109285716/5ab933ef-e0bc-4e5d-9d8d-d676b9ddd047)
+![동네일보헤더](https://github.com/jong9810/town/assets/109285716/8aaeb814-9766-49a5-b5d7-30ef88c9af6a)
 
 
 
