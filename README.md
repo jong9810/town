@@ -34,15 +34,15 @@
 
 
 ## 📌 주요 기능
-#### 메인 페이지 - <a href="" >WIKI 이동</a> -
+#### 회원가입 & 로그인 - <a href="https://github.com/jong9810/town/wiki/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-&-%EB%A1%9C%EA%B7%B8%EC%9D%B8" >상세보기</a> -
 - 
-#### 회원가입/로그인 - <a href="" >WIKI 이동</a> -
+#### 메인 페이지 - <a href="https://github.com/jong9810/town/wiki/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80" >상세보기</a> -
 - 
-#### 마이 페이지 - <a href="" >WIKI 이동</a> -
+#### 게시판 CRUD - <a href="https://github.com/jong9810/town/wiki/%EA%B2%8C%EC%8B%9C%ED%8C%90-CRUD" >상세보기</a> -
 - 
-#### 게시판 CRUD - <a href="" >WIKI 이동</a> -
+#### 게시글 목록 - <a href="https://github.com/jong9810/town/wiki/%EA%B2%8C%EC%8B%9C%EA%B8%80-%EB%AA%A9%EB%A1%9D" >상세보기</a> -
 - 
-#### 게시글 목록 페이지 - <a href="" >WIKI 이동</a> -
+#### 마이 페이지 - <a href="https://github.com/jong9810/town/wiki/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80" >상세보기</a> -
 - 
-#### 관리자 페이지 - <a href="" >WIKI 이동</a> -
+#### 관리자 페이지 - <a href="https://github.com/jong9810/town/wiki/%EA%B4%80%EB%A6%AC%EC%9E%90-%ED%8E%98%EC%9D%B4%EC%A7%80" >상세보기</a> -
 - 
