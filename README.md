@@ -1,4 +1,4 @@
-<img src="github.com/jong9810/town/assets/109285716/0e394362-6262-4ead-bc17-dad285c36d4d"  width="100%"/>
+<img src="https://github.com/jong9810/town/assets/109285716/0e394362-6262-4ead-bc17-dad285c36d4d" width="100%"/>
 
 
 
