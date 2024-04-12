@@ -1,4 +1,4 @@
-![동네일보](https://github.com/jong9810/town/assets/109285716/ecb09f81-8278-431e-9acd-3f8e0326567b)
+<img src="github.com/jong9810/town/assets/109285716/0e394362-6262-4ead-bc17-dad285c36d4d"  width="100%"/>
 
 
 
